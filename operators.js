@@ -138,3 +138,32 @@ it("should return correct actions", function () {
         expect(actions.length).toBe(1);
     })
 }) // unit testing simple epics of redux observables.
+
+it("should perform search", function () {
+    const action$ = ActionsObservable.of({
+        type: "FETCH_USER",
+        payload: "abc"
+    })
+    const deps = {
+        ajax:{
+            getJSON: ()=> Observable.of({name:"abc"});
+        }
+    };
+
+    const output$ = searchBerrEpic(action$, store, deps);
+
+    output$.subscribe(action => {
+        console.log(action);
+    })
+
+    output.toArray().subscribe(actions => {
+        expect(actions.length).toBe(1);
+    })
+}) // ajax call test.
+
+import {ajax} from "rxjs/observable/dom/ajax";
+const epicMiddleWare = createEpicMiddleware(rootEpic, {
+    dependencies: {
+        ajax
+    }
+})
