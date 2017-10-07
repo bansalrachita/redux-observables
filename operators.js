@@ -27,7 +27,7 @@ action$
 
 //adding Redux Devtool in the app.
 
-composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 action$
     .ofType("FETCH_USER")
@@ -36,10 +36,7 @@ action$
             .map(response => {
             });
     })
-:
-Simple
-AJAX
-call
+//Simple AJAX call
 
 action$
     .ofType("FETCH_USER")
