@@ -1,3 +1,5 @@
+import {ActionsObservable} from "redux-observable";
+
 action$
     .do((action)=> console.log(action));
 // do will perform an action with generating more elements
@@ -123,7 +125,6 @@ action$
         )
     }); // Take until will cancel subscription.
 
-import {ActionsObservable} from "redux-observable";
 it("should return correct actions", function () {
     const action$ = ActionsObservable.of({
         type: "FETCH_USER",
