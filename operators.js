@@ -41,12 +41,12 @@ action$
 action$
     .ofType("FETCH_USER")
     .switchMap(({payLoad}) => {
-        return Observable.ajax.getJSON(URL)
+        return Observable.ajax.getJSON("URL")
         //get top 5 ids from the response.
             .map(ids => {
                 ids.slice(0, 5)
                 //map each id to a unique URL
-                    .map(ids => ids.map(id => URL1 + id))
+                    .map(ids => ids.map(id => "URL/" + id))
                     //get a list of observables to be subscribed
                     .map(urls =>urls.map(url => Observable.ajax.get(url)))
                     //executes the ajax call and appends results synchronously
@@ -62,9 +62,8 @@ action$
     .ofType("FETCH_USER”)
         .debounceTime(500)
         .switchMap(({payLoad}) => {
-            return Observable.ajax.getJSON(URL + payload)
-                .map(response => {
-                });
+            return Observable.ajax.getJSON("URL")
+                .map(response => receiveUser(response));
         })
 // Applying debounce before request is fired.
 
@@ -72,7 +71,7 @@ action$
     .ofType("FETCH_USER")
     .debounceTime(500)
     .switchMap(({payLoad}) => {
-        return Observable.ajax.getJSON(URL + payload)
+        return Observable.ajax.getJSON("URL")
             .map(response => {
                 if (x) {
                     Observable.throw(new Error("error"));
@@ -91,7 +90,7 @@ action$
     .filter(action => action.payload !== "")
     .switchMap(({payLoad}) => {
         const loading = Observable.of(searchBearsLoading(true));
-        const request = Observable.ajax.getJSON(url)
+        const request = Observable.ajax.getJSON("URL")
             .map(receiveBeers)
             .catch(error => {
                 Observable.of(searchBeerErr(error));
@@ -111,7 +110,7 @@ action$
     .filter(action => action.payload !== "")
     .switchMap(({payLoad}) => {
         const loading = Observable.of(searchBearsLoading(true));
-        const request = Observable.ajax.getJSON(url)
+        const request = Observable.ajax.getJSON("URL")
             .takeUntil(action$.ofType(CANCEL))
             .map(receiveBeers)
             .catch(error => {
