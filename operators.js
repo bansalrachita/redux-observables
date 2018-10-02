@@ -1,10 +1,10 @@
 import {ActionsObservable} from "redux-observable";
 
 action$
-    .do((action)=> console.log(action));
+    .do((action) => console.log(action));
 // do will perform an action with generating more elements
 action$
-    .do((action)=> console.log(action))
+    .do((action) => console.log(action))
     .ignoreElements();
 //stops searching for action output stream and prevents going into infinite
 // loop.
@@ -17,7 +17,7 @@ action$.filter(action => (action === "ANC"))
 
 // Instead of above we can use ofType which uses filter behind the scenes.
 action$.ofType("ANC")
-    .do((action)=> console.log(action))
+    .do((action) => console.log(action))
 
 // Return observable of action ABC 1000 seconds after running action of type “ABC”.
 action$
@@ -50,7 +50,7 @@ action$
                 //map each id to a unique URL
                     .map(ids => ids.map(id => "URL/" + id))
                     //get a list of observables to be subscribed
-                    .map(urls =>urls.map(url => Observable.ajax.get(url)))
+                    .map(urls => urls.map(url => Observable.ajax.get(url)))
                     //executes the ajax call and appends results synchronously
                     .mergeMap(reqs => Observable.forkJoin(reqs))
                     //results dispatch to store
@@ -143,12 +143,7 @@ it("should perform search", function () {
     const action$ = ActionsObservable.of({
         type: "FETCH_USER",
         payload: "abc"
-    })
-    const deps = {
-        ajax:{
-            getJSON: ()=> Observable.of({name:"abc"});
-        }
-    };
+    ;
 
     const output$ = searchBerrEpic(action$, store, deps);
 
@@ -162,6 +157,7 @@ it("should perform search", function () {
 }) // ajax call test.
 
 import {ajax} from "rxjs/observable/dom/ajax";
+
 const epicMiddleWare = createEpicMiddleware(rootEpic, {
     dependencies: {
         ajax
